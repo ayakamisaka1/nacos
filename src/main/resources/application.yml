@@ -1,0 +1,11 @@
+server:
+  port: 9100
+spring:
+  application:
+    name: ayaka
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 8.137.39.241:8847
+
+

@@ -1,0 +1,92 @@
+#创建一个网络给nacos集群
+docker network create -d bridge nacos-cluster
+#启动mysql
+docker run --name mysql -e MYSQL_ROOT_PASSWORD=123456 -d mysql:5.7
+#nacos数据库配置文件执行
+#将nacos的数据库放到nacos网络上
+docker network connect nacos-cluster mysql
+
+##启动nacos
+
+export CNAME=nacos1
+docker rm -f ${CNAME}
+docker volume rm -f ${CNAME}-logs
+docker volume create ${CNAME}-logs
+docker run -d --name ${CNAME} \
+--network=nacos-cluster --restart=always \
+--hostname=${CNAME} \
+-e PREFER_HOST_MODE=hostname \
+-e NACOS_SERVERS="nacos1:8848 nacos2:8848 nacos3:8848" \
+-e SPRING_DATASOURCE_PLATFORM=mysql \
+-e MYSQL_SERVICE_HOST=mysql \
+-e MYSQL_SERVICE_DB_NAME=nacos_config \
+-e MYSQL_SERVICE_PORT=3306 \
+-e MYSQL_SERVICE_USER=root \
+-e MYSQL_SERVICE_PASSWORD=123456 \
+-e MYSQL_SERVICE_DB_PARAM="characterEncoding=utf8&connectTimeout=10000&socketTimeout=30000&autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true" \
+-e NACOS_AUTH_IDENTITY_KEY=2222 \
+-e NACOS_AUTH_IDENTITY_VALUE=2xxx \
+-e NACOS_AUTH_TOKEN=SecretKey012345678901234567890123456789012345678901234567890123456789 \
+-e JVM_XMS=128m \
+-e JVM_XMX=128m \
+-e JVM_XMN=16m \
+-v ${CNAME}-logs:/home/nacos/logs \
+-p 8847:8848 -p 9847:9848 -d \
+nacos/nacos-server:v2.2.1-slim
+
+
+
+
+export CNAME=nacos2
+docker rm -f ${CNAME}
+docker volume rm -f ${CNAME}-logs
+docker volume create ${CNAME}-logs
+docker run -d --name ${CNAME} \
+--network=nacos-cluster --restart=always \
+--hostname=${CNAME} \
+-e PREFER_HOST_MODE=hostname \
+-e NACOS_SERVERS="nacos1:8848 nacos2:8848 nacos3:8848" \
+-e SPRING_DATASOURCE_PLATFORM=mysql \
+-e MYSQL_SERVICE_HOST=mysql \
+-e MYSQL_SERVICE_DB_NAME=nacos_config \
+-e MYSQL_SERVICE_PORT=3306 \
+-e MYSQL_SERVICE_USER=root \
+-e MYSQL_SERVICE_PASSWORD=123456 \
+-e MYSQL_SERVICE_DB_PARAM="characterEncoding=utf8&connectTimeout=10000&socketTimeout=30000&autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true" \
+-e NACOS_AUTH_IDENTITY_KEY=2222 \
+-e NACOS_AUTH_IDENTITY_VALUE=2xxx \
+-e NACOS_AUTH_TOKEN=SecretKey012345678901234567890123456789012345678901234567890123456789 \
+-e JVM_XMS=128m \
+-e JVM_XMX=128m \
+-e JVM_XMN=16m \
+-v ${CNAME}-logs:/home/nacos/logs \
+-p 8848:8848 -p 9848:9848 -d \
+nacos/nacos-server:v2.2.1-slim
+
+
+
+export CNAME=nacos3
+docker rm -f ${CNAME}
+docker volume rm -f ${CNAME}-logs
+docker volume create ${CNAME}-logs
+docker run -d --name ${CNAME} \
+--network=nacos-cluster --restart=always \
+--hostname=${CNAME} \
+-e PREFER_HOST_MODE=hostname \
+-e NACOS_SERVERS="nacos1:8848 nacos2:8848 nacos3:8848" \
+-e SPRING_DATASOURCE_PLATFORM=mysql \
+-e MYSQL_SERVICE_HOST=mysql \
+-e MYSQL_SERVICE_DB_NAME=nacos_config \
+-e MYSQL_SERVICE_PORT=3306 \
+-e MYSQL_SERVICE_USER=root \
+-e MYSQL_SERVICE_PASSWORD=123456 \
+-e MYSQL_SERVICE_DB_PARAM="characterEncoding=utf8&connectTimeout=10000&socketTimeout=30000&autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true" \
+-e NACOS_AUTH_IDENTITY_KEY=2222 \
+-e NACOS_AUTH_IDENTITY_VALUE=2xxx \
+-e NACOS_AUTH_TOKEN=SecretKey012345678901234567890123456789012345678901234567890123456789 \
+-e JVM_XMS=128m \
+-e JVM_XMX=128m \
+-e JVM_XMN=16m \
+-v ${CNAME}-logs:/home/nacos/logs \
+-p 8849:8848 -p 9849:9848 -d \
+nacos/nacos-server:v2.2.1-slim
