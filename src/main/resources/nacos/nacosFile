@@ -1,7 +1,7 @@
 #创建一个网络给nacos集群
 docker network create -d bridge nacos-cluster
 #启动mysql
-docker run --name mysql -e MYSQL_ROOT_PASSWORD=123456 -d mysql:5.7
+docker run --name mysql -p 3306:3306 -v /home/mysql:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=123456 -d mysql:5.7
 #nacos数据库配置文件执行
 #将nacos的数据库放到nacos网络上
 docker network connect nacos-cluster mysql
