@@ -1,7 +1,7 @@
 #创建一个网络给nacos集群
 docker network create -d bridge nacos-cluster
 #启动mysql
-docker run --name mysql -p 3306:3306 -v /home/mysql:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=123456 -d mysql:5.7
+docker run --name mysql -p 4508:3306 -v /home/mysql:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=XSJroot123456 -d mysql:5.7
 #nacos数据库配置文件执行
 #将nacos的数据库放到nacos网络上
 docker network connect nacos-cluster mysql
@@ -20,9 +20,9 @@ docker run -d --name ${CNAME} \
 -e SPRING_DATASOURCE_PLATFORM=mysql \
 -e MYSQL_SERVICE_HOST=mysql \
 -e MYSQL_SERVICE_DB_NAME=nacos_config \
--e MYSQL_SERVICE_PORT=3306 \
+-e MYSQL_SERVICE_PORT=4508 \
 -e MYSQL_SERVICE_USER=root \
--e MYSQL_SERVICE_PASSWORD=123456 \
+-e MYSQL_SERVICE_PASSWORD=XSJroot123456 \
 -e MYSQL_SERVICE_DB_PARAM="characterEncoding=utf8&connectTimeout=10000&socketTimeout=30000&autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true" \
 -e NACOS_AUTH_IDENTITY_KEY=2222 \
 -e NACOS_AUTH_IDENTITY_VALUE=2xxx \
@@ -49,9 +49,9 @@ docker run -d --name ${CNAME} \
 -e SPRING_DATASOURCE_PLATFORM=mysql \
 -e MYSQL_SERVICE_HOST=mysql \
 -e MYSQL_SERVICE_DB_NAME=nacos_config \
--e MYSQL_SERVICE_PORT=3306 \
+-e MYSQL_SERVICE_PORT=4508 \
 -e MYSQL_SERVICE_USER=root \
--e MYSQL_SERVICE_PASSWORD=123456 \
+-e MYSQL_SERVICE_PASSWORD=XSJroot123456 \
 -e MYSQL_SERVICE_DB_PARAM="characterEncoding=utf8&connectTimeout=10000&socketTimeout=30000&autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true" \
 -e NACOS_AUTH_IDENTITY_KEY=2222 \
 -e NACOS_AUTH_IDENTITY_VALUE=2xxx \
@@ -77,9 +77,9 @@ docker run -d --name ${CNAME} \
 -e SPRING_DATASOURCE_PLATFORM=mysql \
 -e MYSQL_SERVICE_HOST=mysql \
 -e MYSQL_SERVICE_DB_NAME=nacos_config \
--e MYSQL_SERVICE_PORT=3306 \
+-e MYSQL_SERVICE_PORT=4508 \
 -e MYSQL_SERVICE_USER=root \
--e MYSQL_SERVICE_PASSWORD=123456 \
+-e MYSQL_SERVICE_PASSWORD=XSJroot123456 \
 -e MYSQL_SERVICE_DB_PARAM="characterEncoding=utf8&connectTimeout=10000&socketTimeout=30000&autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true" \
 -e NACOS_AUTH_IDENTITY_KEY=2222 \
 -e NACOS_AUTH_IDENTITY_VALUE=2xxx \
